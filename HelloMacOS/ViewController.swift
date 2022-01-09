@@ -6,13 +6,30 @@
 //
 
 import Cocoa
+import MapKit
+import CoreLocation
 
 class ViewController: NSViewController {
+    
+    @IBOutlet weak var mapView: MKMapView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.mapView.delegate = self
+        
+        // set region
+        let center = CLLocationCoordinate2D(latitude: 39.716876, longitude: 140.129728)
+        let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+        let region = MKCoordinateRegion(center: center, span: span)
+        self.mapView.setRegion(region, animated: false)
+        self.mapView.regionThatFits(region)
 
-        // Do any additional setup after loading the view.
+        let urlTemplate = "http://tile.openstreetmap.org/{z}/{x}/{y}.png"
+        let overlay = MKTileOverlay(urlTemplate: urlTemplate)
+//        overlay.isGeometryFlipped = true
+        overlay.canReplaceMapContent = true
+        self.mapView.addOverlay(overlay, level: .aboveLabels)
     }
 
     override var representedObject: Any? {
@@ -21,6 +38,23 @@ class ViewController: NSViewController {
         }
     }
 
-
+    @IBAction func didPushMyLocationButton(_ sender: NSButton) {
+        print("did push my location button")
+    }
+    
+    @IBAction func didPushUniversityButton(_ sender: NSButton) {
+        print("did push university button")
+    }
+    
 }
 
+extension ViewController: MKMapViewDelegate {
+    internal func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        if overlay is MKTileOverlay {
+            let renderer = MKTileOverlayRenderer(overlay: overlay)
+            return renderer
+        } else {
+            return MKTileOverlayRenderer()
+        }
+    }
+}

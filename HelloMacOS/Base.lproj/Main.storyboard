@@ -1,7 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11134" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11134"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <plugIn identifier="com.apple.MapKitIBPlugin" version="19529"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -673,7 +676,7 @@
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModuleProvider="target"/>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="HelloMacOS" customModuleProvider="target"/>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -703,11 +706,59 @@
         <!--View Controller-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
-                <viewController id="XfG-lQ-9wD" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="HelloMacOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="m2S-Jp-Qdl">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6h9-Kr-yIi">
+                                <rect key="frame" x="48" y="239" width="106" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="First macOS App" id="x3T-Pa-Ohk">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <mapView mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="frO-Na-biS">
+                                <rect key="frame" x="0.0" y="0.0" width="480" height="222"/>
+                            </mapView>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="31X-SO-rf6">
+                                <rect key="frame" x="175" y="230" width="104" height="32"/>
+                                <buttonCell key="cell" type="push" title="my location" bezelStyle="rounded" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="U2J-d2-cTD">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="didPushMyLocationButton:" target="XfG-lQ-9wD" id="QhW-EO-Rpo"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="acG-SL-kQW">
+                                <rect key="frame" x="295" y="230" width="93" height="32"/>
+                                <buttonCell key="cell" type="push" title="university" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2ML-sh-iep">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="didPushUniversityButton:" target="XfG-lQ-9wD" id="T4f-TH-ZVw"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="frO-Na-biS" secondAttribute="trailing" id="8Rp-1O-g4S"/>
+                            <constraint firstItem="acG-SL-kQW" firstAttribute="centerY" secondItem="6h9-Kr-yIi" secondAttribute="centerY" id="B8B-qc-8fC"/>
+                            <constraint firstItem="6h9-Kr-yIi" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="50" id="CFx-bA-Spm"/>
+                            <constraint firstItem="acG-SL-kQW" firstAttribute="leading" secondItem="31X-SO-rf6" secondAttribute="trailing" constant="30" id="D3A-Ci-2Lw"/>
+                            <constraint firstItem="31X-SO-rf6" firstAttribute="leading" secondItem="6h9-Kr-yIi" secondAttribute="trailing" constant="30" id="G39-un-4JQ"/>
+                            <constraint firstItem="frO-Na-biS" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="KEF-1H-iUk"/>
+                            <constraint firstItem="6h9-Kr-yIi" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="15" id="W1j-Er-ST3"/>
+                            <constraint firstAttribute="bottom" secondItem="frO-Na-biS" secondAttribute="bottom" id="ZFx-Oa-PaZ"/>
+                            <constraint firstItem="frO-Na-biS" firstAttribute="top" secondItem="31X-SO-rf6" secondAttribute="bottom" constant="15" id="tGZ-xA-xEn"/>
+                            <constraint firstItem="31X-SO-rf6" firstAttribute="centerY" secondItem="6h9-Kr-yIi" secondAttribute="centerY" id="uTY-4T-22N"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="mapView" destination="frO-Na-biS" id="hn0-Sh-1WC"/>
+                    </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
