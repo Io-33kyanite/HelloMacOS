@@ -20,14 +20,12 @@ class ViewController: NSViewController {
         
         // set region
         let center = CLLocationCoordinate2D(latitude: 39.716876, longitude: 140.129728)
-        let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+        let span = MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2)
         let region = MKCoordinateRegion(center: center, span: span)
         self.mapView.setRegion(region, animated: false)
         self.mapView.regionThatFits(region)
 
-        let urlTemplate = "http://tile.openstreetmap.org/{z}/{x}/{y}.png"
-        let overlay = MKTileOverlay(urlTemplate: urlTemplate)
-//        overlay.isGeometryFlipped = true
+        let overlay = MKTileOverlay(urlTemplate: "http://tile.openstreetmap.org/{z}/{x}/{y}.png")
         overlay.canReplaceMapContent = true
         self.mapView.addOverlay(overlay, level: .aboveLabels)
     }
@@ -49,7 +47,7 @@ class ViewController: NSViewController {
 }
 
 extension ViewController: MKMapViewDelegate {
-    internal func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         if overlay is MKTileOverlay {
             let renderer = MKTileOverlayRenderer(overlay: overlay)
             return renderer
